@@ -1,13 +1,15 @@
 <?php
 include('../classes/helper.php');
-if(isset($_POST)){
+if(isset($_POST['submit'])){
     //echo $_POST['userid'];
-    //$userid=$_POST['userid'];
+    $fullname=$_POST['fullname'];
     $username=$_POST['username'];
     $email=$_POST['email'];
     $password=$_POST['password'];
+    $cpassword=$_POST['confirmpassword'];
+    $role=$_POST['role'];
     if($username!=""){
-    addNewUser($username,$email,$password);
+    addNewUser($fullname,$username,$email,$password,$cpassword,$role);
     }
 }
 ?>
@@ -36,9 +38,9 @@ if(isset($_POST)){
 				<div class="col"><input type="text" class="form-control" name="last_name" placeholder="Last Name" required="required"></div>
 			</div>        	
         </div> -->
-        <!-- <div class="form-group">		
-		<input type="number" class="form-control" name="userid" placeholder="User Id" required="required">
-    </div> -->
+        <div class="form-group">		
+		<input type="text" class="form-control" name="fullname" placeholder="Enter Full Name" required="required">
+    </div>
         <div class="form-group">
         	<input type="text" class="form-control" name="username" placeholder="User name" required="required">
         </div>
@@ -49,12 +51,18 @@ if(isset($_POST)){
 		<div class="form-group">
             <input type="password" class="form-control" name="password" placeholder="Password" required="required">
         </div>
+        <div class="form-group">
+            <input type="password" class="form-control" name="confirmpassword" placeholder="Confirm Password" required="required">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="role" placeholder="Role" required="required">
+        </div>
 		        
         <div class="form-group">
 			<label class="form-check-label"><input type="checkbox" required="required"> I accept the <a href="#">Terms of Use</a> &amp; <a href="#">Privacy Policy</a></label>
 		</div>
 		<div class="form-group">
-            <button type="submit" class="btn btn-primary btn-lg btn-block">Sign Up</button>
+            <button name="submit" type="submit" class="btn btn-primary btn-lg btn-block">Sign Up</button>
         </div>
     </form>
 	<div class="text-center sign">Already have an account? 

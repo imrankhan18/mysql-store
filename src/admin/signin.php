@@ -1,14 +1,27 @@
-<?php 
-include("../classes/helper.php");
+<?php
 
-if(isset($_POST)){
+include("../classes/helper.php");
+require_once("../classes/config.php");
+if(isset($_POST['upass'])){
   $email=$_POST['uemail'];
   $upass=$_POST['upass'];
-if($email!=""){
- echo $email;
-  User($email,$upass);
+  UserLogin($email,$upass);
+ //echo $email;
+
+ if(UserLogin($email,$upass) && $_SESSION['login']=="yes"){
+   echo "yes";
+// if($check=="matched"){
+   header("location:../dashboard.php");
+  //  echo "matched";
+ 
+}
+else
+{
+echo "Not correct details!!!";
 }
 }
+
+
 ?>
 <!DOCTYPE html>
 <!-- saved from url=(0051)https://getbootstrap.com/docs/5.1/examples/sign-in/ -->
@@ -99,7 +112,7 @@ if($email!=""){
       <button class="w-100 btn btn-lg btn-dark" type="submit">Sign in</button>
       <div class=" form-floating text-center">Don't have an account? <a href="signup.php">Sign Up</a></div>
       </div>
-      <p class="mt-5 mb-3 text-muted">© 2017–2022</p>
+      <p class="mt-5 mb-3 text-muted">© Cedcoss Pvt. Ltd </p>
     </form>
   </main>
 

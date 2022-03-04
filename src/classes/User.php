@@ -1,64 +1,41 @@
 <?php
 include('DB.php');
 
-    class User extends DB
+class User extends DB
+{
+    public int $user_id;
+    public string $username;
+    public string $email;
+    public string $password;
+    public function userDetail($fullname, $username, $email, $password, $cpassword,$role)
     {
-        public int $user_id;
-        public string $username;
-        public string $email;
-        public string $password;
-        
+        //$this->user_id =$user_id;
+        $this->fullname = $fullname;
+        $this->username = $username;
+        $this->email = $email;
+        $this->password = $password;
+        $this->cpassword = $cpassword;
+        $this->role = $role;
+    }
 
-        // public function __construct($username, $email, $password)
-        // {
-        //     // $this->user_id =$user_id;
-        //     $this->username = $username;
-        //     $this->email = $email;
-        //     $this->password = $password;
-            
-        // }
+    public function addUser($user)
+    {
+        DB::getInstance()->exec(
+            "INSERT INTO users(full_name,user_name,email,password,confirm_password,role) 
+            VALUES('$user->fullname','$user->username','$user->email','$user->password','$user->cpassword','$user->role');"
+        );
+    }
 
-        public function userDetail($username, $email, $password)
-        {
-            // $this->user_id =$user_id;
-            $this->username = $username;
-            $this->email = $email;
-            $this->password = $password;
-            
-        }
+    public function signInUser()
+    {
 
-        public function addUser($user){
-            DB::getInstance()->exec("INSERT INTO users(user_name,email,password) 
-            VALUES('$user->username','$user->email','$user->password');"
-            );
-            
-        }
-    
-        public function signInUser($email,$password){
 
-            
-            //DB::getInstance()->exec("INSERT INTO signin(email,password) 
+        //DB::getInstance()->exec("INSERT INTO signin(email,password) 
 
-            $stmt = DB::getInstance()->prepare("SELECT email,password FROM users");
-            $stmt->execute();
-            //VALUES('$sign->email','$sign->password');"
-            $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-           // print_r($stmt->fetchAll());
+        $stmt = DB::getInstance()->prepare("SELECT email,password FROM users");
+        $stmt->execute();
+        $result=$stmt->setFetchMode(PDO::FETCH_ASSOC);
 
-            $array=$stmt->fetchAll();
-
-            foreach($array as $key=>$val){
-        
-            if($email==$val['email']){
-                echo "matched";
-                }
-                else{
-                    echo "false";
-                }
-            }
-            
-        
-       
-      } 
-     }
-?>
+        return $stmt->fetchAll();
+    }
+}
