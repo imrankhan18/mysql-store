@@ -5,10 +5,11 @@ require_once("../classes/config.php");
 if(isset($_POST['upass'])){
   $email=$_POST['uemail'];
   $upass=$_POST['upass'];
-  UserLogin($email,$upass);
+  $role=$_POST['role'];
+  UserLogin($email,$upass,$role);
  //echo $email;
 
- if(UserLogin($email,$upass) && $_SESSION['login']=="yes"){
+ if(UserLogin($email,$upass,$role) && $_SESSION['login']=="yes"){
    echo "yes";
 // if($check=="matched"){
    header("location:../dashboard.php");
@@ -19,8 +20,8 @@ else
 {
 echo "Not correct details!!!";
 }
-}
 
+}
 
 ?>
 <!DOCTYPE html>
@@ -84,17 +85,7 @@ echo "Not correct details!!!";
     <form action="" method="POST">
       <img class="mb-4" src="download.jpeg" alt="" width="72" height="57">
       <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-
-      <!-- <div class="form-floating">
-        <input name="uid" type="text" class="form-control" id="floatingInput" placeholder="user id">
-        <label for="floatingInput">User Id</label>
-      </div>
-
-      <div class="form-floating">
-        <input name="uname" type="text" class="form-control" id="floatingInput" placeholder="user name">
-        <label for="floatingInput">User Name</label>
-      </div> -->
-
+      
       <div class="form-floating">
         <input name="uemail" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
         <label for="floatingInput">Email address</label>
@@ -102,6 +93,10 @@ echo "Not correct details!!!";
       <div class="form-floating">
         <input name="upass" type="password" class="form-control" id="floatingPassword" placeholder="Password">
         <label for="floatingPassword">Password</label>
+      </div>
+      <div class="form-floating">
+        <input name="role" type="text" class="form-control" id="floatingPassword" placeholder="Role">
+        <label for="floatingPassword">Role</label>
       </div>
 
       <div class="checkbox mb-3">

@@ -1,6 +1,7 @@
 <?php
 session_start();
-include("./classes/config.php");
+require_once("./classes/config.php");
+include("./classes/helper.php");
 
 if(isset($_POST['logout'])){
   if($_POST['logout']=="yes"){
@@ -9,7 +10,7 @@ if(isset($_POST['logout'])){
      $_SESSION['show']='none';
     header("location:../admin/signin.php");
   }
-  
+ 
   }
 ?>
 <!doctype html>
@@ -66,9 +67,13 @@ if(isset($_POST['logout'])){
 </header>
 
 <div class="container-fluid">
-  <div class="row">
-    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-      <div class="position-sticky pt-3">
+  <div  class="row">
+    <nav  id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+    <a class="nav-link active" aria-current="page" href="dashboard.html">
+              <span data-feather="home"></span>
+              Users's Profile
+            </a>
+      <div style="display:<?php echo $_SESSION['display']?>" class="position-sticky pt-3">
         <ul class="nav flex-column">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="dashboard.html">
@@ -125,9 +130,10 @@ if(isset($_POST['logout'])){
         </div>
       </div>
 
-      <h2>Section title</h2>
-      <div class="table-responsive">
-        <table class="table table-striped table-sm">
+      <h2>My Profile</h2>
+      <div style="display:<?php echo $_SESSION['display']?>" class="table-responsive">
+      <?php details(); echo $_SESSION['displayDetails']; ?>
+        <!-- <table class="table table-striped table-sm">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -144,6 +150,8 @@ if(isset($_POST['logout'])){
               <td>data</td>
               <td>placeholder</td>
               <td>text</td>
+              
+            
             </tr>
             <tr>
               <td>1,002</td>
@@ -151,10 +159,42 @@ if(isset($_POST['logout'])){
               <td>irrelevant</td>
               <td>visual</td>
               <td>layout</td>
+            
             </tr>
           </tbody>
-        </table>
+        </table> -->
       </div>
+      <div  class="table-responsive">
+      <!-- <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th scope="col">User name</th>
+              <th scope="col">Full Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Password</th>
+              <th scope="col">Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1,001</td>
+              <td>random</td>
+              <td>data</td>
+              <td>placeholder</td>
+              <td>text</td>
+              <td><button type="button" class="btn btn-sm btn-outline-secondary">Edit</button></td>
+            </tr>
+            <tr>
+              <td>1,002</td>
+              <td>placeholder</td>
+              <td>irrelevant</td>
+              <td>visual</td>
+              <td>layout</td>
+              <td><button type="button" class="btn btn-sm btn-outline-secondary">Edit</button></td>
+            </tr>
+          </tbody>
+        </table> -->
+    </div>
     </main>
   </div>
 </div>

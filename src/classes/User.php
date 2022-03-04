@@ -7,6 +7,9 @@ class User extends DB
     public string $username;
     public string $email;
     public string $password;
+    public string $cpassword;
+    public string $role;
+
     public function userDetail($fullname, $username, $email, $password, $cpassword,$role)
     {
         //$this->user_id =$user_id;
@@ -17,12 +20,12 @@ class User extends DB
         $this->cpassword = $cpassword;
         $this->role = $role;
     }
-
+   public $status='pending';
     public function addUser($user)
     {
         DB::getInstance()->exec(
-            "INSERT INTO users(full_name,user_name,email,password,confirm_password,role) 
-            VALUES('$user->fullname','$user->username','$user->email','$user->password','$user->cpassword','$user->role');"
+            "INSERT INTO users(full_name,user_name,email,password,confirm_password,role,status) 
+            VALUES('$user->fullname','$user->username','$user->email','$user->password','$user->cpassword','$user->role','$user->status');"
         );
     }
 
@@ -32,10 +35,21 @@ class User extends DB
 
         //DB::getInstance()->exec("INSERT INTO signin(email,password) 
 
-        $stmt = DB::getInstance()->prepare("SELECT email,password FROM users");
+        $stmt = DB::getInstance()->prepare("SELECT email,password,role,status FROM users");
+        $stmt->execute();
+        $result=$stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+        return $stmt->fetchAll();
+    }
+
+    public function showDetails(){
+   
+        $stmt = DB::getInstance()->prepare("SELECT user_name,full_name,email,password,role FROM users");
         $stmt->execute();
         $result=$stmt->setFetchMode(PDO::FETCH_ASSOC);
 
         return $stmt->fetchAll();
     }
 }
+
+
