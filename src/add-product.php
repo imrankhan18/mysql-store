@@ -1,3 +1,24 @@
+<?php 
+include("./classes/productopr.php");
+if(isset($_POST['pname']))
+{
+  $action=$_POST['action'];
+  echo $action;
+  switch($action)
+  {
+    case 'addProduct':
+      {
+         $pname=$_POST['pname'];
+         $category=$_POST['category'];
+         $price=$_POST['price'];
+         $quantity=$_POST['quantity'];
+         $name=$_POST['name'];
+         $email=$_POST['email'];
+         addProduct($pname,$category,$price,$quantity,$name,$email);
+      }
+  }
+}
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -57,7 +78,7 @@
       <div class="position-sticky pt-3">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="dashboard.html">
+            <a class="nav-link active" aria-current="page" href="dashboard.php">
               <span data-feather="home"></span>
               Dashboard
             </a>
@@ -111,48 +132,33 @@
         </div>
       </div>
 
-      <form class="row g-3">
+      <form class="row g-3" action="" method='post'>
         <div class="col-md-6">
           <label for="inputEmail4" class="form-label">Email</label>
-          <input type="email" class="form-control" id="inputEmail4">
+          <input type="email" class="form-control" id="inputEmail4" name="email">
         </div>
         <div class="col-md-6">
-          <label for="inputPassword4" class="form-label">Password</label>
-          <input type="password" class="form-control" id="inputPassword4">
+          <label for="inputPassword4" class="form-label">Name</label>
+          <input type="text" class="form-control" id="inputPassword4" name="name">
         </div>
         <div class="col-12">
-          <label for="inputAddress" class="form-label">Address</label>
-          <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+          <label for="inputAddress" class="form-label">Product Name</label>
+          <input type="text" class="form-control" id="inputAddress" name="pname" placeholder="Product name">
         </div>
         <div class="col-12">
-          <label for="inputAddress2" class="form-label">Address 2</label>
-          <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+          <label for="inputAddress2" class="form-label">Product Category</label>
+          <input type="text" class="form-control" id="inputAddress2" name="category" placeholder="category">
         </div>
         <div class="col-md-6">
-          <label for="inputCity" class="form-label">City</label>
-          <input type="text" class="form-control" id="inputCity">
+          <label for="inputCity" class="form-label">Price</label>
+          <input type="integer" class="form-control" id="inputCity" name="price">
         </div>
-        <div class="col-md-4">
-          <label for="inputState" class="form-label">State</label>
-          <select id="inputState" class="form-select">
-            <option selected>Choose...</option>
-            <option>...</option>
-          </select>
-        </div>
-        <div class="col-md-2">
-          <label for="inputZip" class="form-label">Zip</label>
-          <input type="text" class="form-control" id="inputZip">
+        <div class="col-md-6">
+          <label for="inputCity" class="form-label">Qauntity</label>
+          <input type="number" class="form-control" id="inputCity" name="quantity">
         </div>
         <div class="col-12">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="gridCheck">
-            <label class="form-check-label" for="gridCheck">
-              Check me out
-            </label>
-          </div>
-        </div>
-        <div class="col-12">
-          <button type="submit" class="btn btn-primary">Add Product</button>
+          <button type="submit" class="btn btn-primary" name='action' value='addProduct'>Add Product</button>
         </div>
       </form>      
     </main>

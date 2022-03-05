@@ -19,6 +19,7 @@ function UserLogin($email, $password, $role)
     foreach ($sign->signInUser() as $key => $val) {
         if ($val['email'] == $email && $val['password'] == $password && $val['role'] == $role) {
             $_SESSION['login'] = 'yes';
+            $_SESSION['id']=$val['user_id'];
             // if($val['status']=='approved')
             // $_SESSION['disp']='block';
             // return true;
@@ -44,10 +45,23 @@ function UserLogin($email, $password, $role)
 }
 
 
-function Details()
+function myDetails($id)
 {
-    $details = new User();
+    $user=new User();
+    foreach($user->showDetails() as $key=>$val)
+    {
+        if($val['user_id']==$id)
+        {
+            $_SESSION['details']=$val;
+            Details();
+            return;
+        }
+    }
 
+}
+
+function Details()
+{   $details=$_SESSION['details'];
     $_SESSION['displayDetails'] = "<table class='table table-striped table-sm'>
     <thead>
               <tr>
@@ -56,15 +70,48 @@ function Details()
                 <th>Email </th>
                 <th>Password</th>
                 <th>Role</th>
-              </tr></thead><tbody>";
-    foreach ($details->showDetails() as $key => $value) {
-        $_SESSION['displayDetails'] .= "<tr>
-                <td>" . $value['user_name'] . "</td>
-                <td>" . $value['full_name'] . "</td>
-                <td>" . $value['email'] . "</td>
-                <td>" . $value['password'] . "</td>
-                <td>" . $value['role'] . "</td>
+              </tr></thead><tbody>
+              <tr>
+                <td>" . $details['user_name'] . "</td>
+                <td>" . $details['full_name'] . "</td>
+                <td>" . $details['email'] . "</td>
+                <td>" . $details['password'] . "</td>
+                <td>" . $details['role'] . "</td>
+                <td><form action=''method='post'><button name='action' value='edit'>Edit</button></td>
                 
               </tr></tbody></table>";
-    }
+        }
+
+function editDetails(){
+    $details=$_SESSION['details'];
+    $_SESSION['displayDetails']="<div class='table-responsive'>
+    <table class='table table-striped table-sm'>
+    <thead>
+      <tr>
+        
+        <th scope='col'>User Name</th>
+        <th scope='col'>Full Name</th>
+        <th scope='col'>Email</th>
+        <th scope='col'>Password</th>
+        <th scope='col'>Role</th>
+        
+    </thead>
+    <tbody>
+      <tr><form action='' method='post'>
+       
+        
+        <td><input name='username' placeholder=".$details['user_name']."></td>
+        <td><input name='fullname' placeholder=".$details['full_name']."></td>
+        <td><input name='email' placeholder=".$details['email']."></td>
+        <td><input name='password' placeholder=".$details['password']."></td>
+        <td><input name='role' placeholder=".$details['role']."></td>
+        
+        <td><button name='action' value='update'>update</button></td></form>
+      </tr>
+      
+    </tbody>
+  </table>";
+
+
 }
+

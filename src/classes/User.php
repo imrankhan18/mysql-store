@@ -35,7 +35,7 @@ class User extends DB
 
         //DB::getInstance()->exec("INSERT INTO signin(email,password) 
 
-        $stmt = DB::getInstance()->prepare("SELECT email,password,role,status FROM users");
+        $stmt = DB::getInstance()->prepare("SELECT user_id,email,password,role,status FROM users");
         $stmt->execute();
         $result=$stmt->setFetchMode(PDO::FETCH_ASSOC);
 
@@ -44,7 +44,7 @@ class User extends DB
 
     public function showDetails(){
    
-        $stmt = DB::getInstance()->prepare("SELECT user_name,full_name,email,password,role FROM users");
+        $stmt = DB::getInstance()->prepare("SELECT * FROM users");
         $stmt->execute();
         $result=$stmt->setFetchMode(PDO::FETCH_ASSOC);
 

@@ -1,3 +1,33 @@
+<?php
+session_start();
+include("./classes/productopr.php");
+if(isset($_POST))
+{
+  displayProduct();
+
+  $action=$_POST['action'];
+  //echo $action;
+  switch($action)
+  {
+    case 'edit':
+      {
+        $_SESSION['p_id']=$_POST['id'];
+        header("Location:edit_product.php");
+        displayProduct();
+        break;
+      }
+    case 'delete':
+      {
+        $id=$_POST['id'];
+        deleteProduct($id);
+      }
+  }
+}
+?>
+
+
+
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -57,7 +87,7 @@
       <div class="position-sticky pt-3">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="dashboard.html">
+            <a class="nav-link active" aria-current="page" href="dashboard.php">
               <span data-feather="home"></span>
               Dashboard
             </a>
@@ -144,7 +174,7 @@
         </div>
       </div>
 
-      <form class="row row-cols-lg-auto g-3 align-items-center">
+      <form class="row row-cols-lg-auto g-3 align-items-center" action="" method="post">
         <div class="col-12">
           <label class="visually-hidden" for="inlineFormInputGroupUsername">Search</label>
           <div class="input-group">
@@ -158,37 +188,11 @@
           <button type="submit" class="btn btn-primary">Search</button>
         </div>
         <div class="col-12">
-          <a class="btn btn-success" href="add-product.html">Add Product</a>
+          <a class="btn btn-success" href="add-product.php">Add Product</a>
         </div>
       </form>
-      <div class="table-responsive">
-        <table class="table table-striped table-sm">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">ID</th>
-              <th scope="col">Name</th>
-              <th scope="col">Price</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1,001</td>
-              <td>random</td>
-              <td>data</td>
-              <td>placeholder</td>
-              <td><a href="#">Edit</a>&nbsp;<a href="#">Delete</a></td>
-            </tr>
-            <tr>
-              <td>1,002</td>
-              <td>placeholder</td>
-              <td>irrelevant</td>
-              <td>visual</td>
-              <td><a href="#">Edit</a>&nbsp;<a href="#">Delete</a></td>
-            </tr>
-          </tbody>
-        </table>
+      <?php  echo $_SESSION['p_disp']; ?>
+      
         <nav aria-label="Page navigation example">
             <ul class="pagination">
               <li class="page-item"><a class="page-link" href="#">Previous</a></li>

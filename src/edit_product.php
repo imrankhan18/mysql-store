@@ -1,31 +1,37 @@
 <?php
 session_start();
-require_once("./classes/config.php");
-include("./classes/helper.php");
-$id=$_SESSION['id'];
-if(isset($_POST['logout'])){
-  if($_POST['logout']=="yes"){
-    // echo "yes";
-     $_SESSION['login']='no';
-     $_SESSION['show']='none';
-    header("location:../admin/signin.php");
-  }
+include("./classes/productopr.php");
+if(isset($_POST))
+{
+   $p_id=$_SESSION['p_id'];
+   $detail=getProductDetail($p_id);
+   $detail=$detail[0];
+   //print_r($detail);
 
-  }
-  myDetails($id);
-  $details=$_SESSION['details'];
   $action=$_POST['action'];
-  // Details();
-  
+
   switch($action)
   {
-    case 'edit':
+    case 'updateProduct':
       {
-        editDetails();
-        break;
+         $pname=$_POST['pname'];
+         $category=$_POST['category'];
+         $p_price=$_POST['price'];
+         $quantity=$_POST['quantity'];
+         $name=$_POST['name'];
+         $email=$_POST['email'];
+         updateProduct($p_id,$pname,$category,$price,$quantity,$name,$email);
+         header("Location:productfetch.php");
+         break;
       }
   }
+}
 ?>
+
+
+
+
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -48,7 +54,7 @@ if(isset($_POST['logout'])){
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
-        -webkit-user-select: none;editDetails()
+        -webkit-user-select: none;
         -moz-user-select: none;
         user-select: none;
       }
@@ -74,19 +80,15 @@ if(isset($_POST['logout'])){
   <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
   <div class="navbar-nav">
     <div class="nav-item text-nowrap">
-     <form action="" method="post"><button value="yes" name="logout" class="nav-link px-3 text-white bg-dark">Sign out</button></form>
+      <a class="nav-link px-3" href="#">Sign out</a>
     </div>
   </div>
 </header>
 
 <div class="container-fluid">
-  <div  class="row">
-    <nav  id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-    <a class="nav-link active" aria-current="page" href="dashboard.php">
-              <span data-feather="home"></span>
-              Users's Profile
-            </a>
-      <div style="display:<?php echo $_SESSION['display']?>" class="position-sticky pt-3">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="position-sticky pt-3">
         <ul class="nav flex-column">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="dashboard.php">
@@ -124,13 +126,13 @@ if(isset($_POST['logout'])){
               Integrations
             </a>
           </li>
-        </ul>        
+        </ul>
       </div>
     </nav>
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Dashboard</h1>
+        <h1 class="h2">Edit Product</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
           <div class="btn-group me-2">
             <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
@@ -143,76 +145,54 @@ if(isset($_POST['logout'])){
         </div>
       </div>
 
-      <h2>My Profile</h2>
-     
-      
-      
-      <div style="display:<?php echo $_SESSION['display']?>" class="table-responsive">
-      <?php   ?>
-      <?php  echo $_SESSION['displayDetails']; ?>
-      
-        <!-- <table class="table table-striped table-sm">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Header</th>
-              <th scope="col">Header</th>
-              <th scope="col">Header</th>
-              <th scope="col">Header</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1,001</td>
-              <td>random</td>
-              <td>data</td>
-              <td>placeholder</td>
-              <td>text</td>
-              
-            
-            </tr>
-            <tr>
-              <td>1,002</td>
-              <td>placeholder</td>
-              <td>irrelevant</td>
-              <td>visual</td>
-              <td>layout</td>
-            
-            </tr>
-          </tbody>
-        </table> -->
-      </div>
-      <div  class="table-responsive">
-      <!-- <table class="table table-striped table-sm">
-          <thead>
-            <tr>
-              <th scope="col">User name</th>
-              <th scope="col">Full Name</th>
-              <th scope="col">Email</th>
-              <th scope="col">Password</th>
-              <th scope="col">Role</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1,001</td>
-              <td>random</td>
-              <td>data</td>
-              <td>placeholder</td>
-              <td>text</td>
-              <td><button type="button" class="btn btn-sm btn-outline-secondary">Edit</button></td>
-            </tr>
-            <tr>
-              <td>1,002</td>
-              <td>placeholder</td>
-              <td>irrelevant</td>
-              <td>visual</td>
-              <td>layout</td>
-              <td><button type="button" class="btn btn-sm btn-outline-secondary">Edit</button></td>
-            </tr>
-          </tbody>
-        </table> -->
-    </div>
+      <form class="row g-3" action="" method="post">
+        <div class="col-md-6">
+          <label for="inputEmail4" class="form-label">Email</label>
+          <input type="email" class="form-control" id="inputEmail4" name="email" placeholder="<?php echo $detail['email']?>">
+        </div>
+        <div class="col-md-6">
+          <label for="inputPassword4" class="form-label">Name</label>
+          <input type="text" class="form-control" id="inputPassword4" name="name" placeholder="<?php echo $detail['name']?>">
+        </div>
+        <div class="col-12">
+          <label for="inputAddress" class="form-label">Product Name</label>
+          <input type="text" class="form-control" id="inputAddress"  name="pname" placeholder="<?php echo $detail['product_name']?>">
+        </div>
+        <div class="col-12">
+          <label for="inputAddress2" class="form-label">Product Category</label>
+          <input type="text" class="form-control" id="inputAddress2"  name="category" placeholder="<?php echo $detail['product_category']?>">
+        </div>
+        <div class="col-md-6">
+          <label for="inputCity" class="form-label">Product Price</label>
+          <input type="text" class="form-control" id="inputCity" name="price" placeholder="<?php echo $detail['product_price']?>">
+        </div>
+        <div class="col-md-6">
+          <label for="inputCity" class="form-label">Product Quantity</label>
+          <input type="text" class="form-control" id="inputCity" name="quantity" placeholder="<?php echo $detail['product_quantity']?>">
+        </div>
+        <!-- <div class="col-md-4">
+          <label for="inputState" class="form-label">Quantity</label>
+          <select id="inputState" class="form-select">
+            <option selected>Choose...</option>
+            <option>...</option>
+          </select>
+        </div> -->
+        <!-- <div class="col-md-2">
+          <label for="inputZip" class="form-label">Zip</label>
+          <input type="text" class="form-control" id="inputZip">
+        </div> -->
+        <!-- <div class="col-12">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="gridCheck">
+            <label class="form-check-label" for="gridCheck">
+              Check me out
+            </label>
+          </div>
+        </div> -->
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary"name="action" value="updateProduct">Update Product</button>
+        </div>
+      </form>      
     </main>
   </div>
 </div>
