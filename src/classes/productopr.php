@@ -1,10 +1,9 @@
 <?php
 session_start();
 include("productfetch.php");
-function addProduct($pname,$category,$price,$quantity,$name,$email)
-{
+function addProduct($pname,$category,$price,$quantity,$name,$email,$image){
     $product =new Product();
-    $product->createProduct($pname,$category,$price,$quantity,$name,$email);
+    $product->createProduct($pname,$category,$price,$quantity,$name,$email,$image);
     $product->addProduct($product);
 }
 function displayProduct()
@@ -23,6 +22,7 @@ function displayProduct()
           <th scope='col'>Product Quantity</th>
           <th scope='col'>Name</th>
           <th scope='col'>Email</th>
+          <th scope='col'>Product Image</th>
         </tr>
       </thead>
       <tbody>";
@@ -37,6 +37,7 @@ function displayProduct()
                 <td>".$p['product_quantity']."</td>
                 <td>".$p['name']."</td>
                 <td>".$p['email']."</td>
+                <td>".$p['product_image']."</td>
                 <td><input style='display:none' name='id' value='".$p['product_id']."'><button name='action' value='edit'>EDIT</button><button name='action' value='delete'>DELETE&nbsp;</button></td></form>
           </tr>";
         }
@@ -57,17 +58,17 @@ function deleteProduct($id)
     displayProduct();
 }
 
-function getProductDetail($p_id)
+function getProductDetail($id)
 {
     $product=new Product();
-    return $product->getProductDetail($p_id);
+    return $product->getProductDetail($id);
 
 }
-function updateProduct($p_id,$pname,$category,$price,$quantity,$name,$email)
+function updateProduct($id,$pname,$category,$price,$quantity,$name,$email)
 {
     $product=new Product();
     if($pname!="" && $price!="" && $quantity!="" && $category!="" && $name!="" && $email!="")
-    $product->updateProduct($p_id,$name,$category,$price,$quantity,$name,$email);
+    $product->updateProduct($id,$name,$category,$price,$quantity,$name,$email);
     
     
 }

@@ -1,59 +1,3 @@
-<?php 
-
-include("./classes/productopr.php");
- if(!isset($_SESSION['image'])){
-        $_SESSION['image']='';
-    }
-if(isset($_POST['pname']))
-{
-  $action=$_POST['action'];
-  echo $action;
-  switch($action)
-  {
-    case 'addProduct':
-      {
-         $pname=$_POST['pname'];
-         $category=$_POST['category'];
-         $price=$_POST['price'];
-         $quantity=$_POST['quantity'];
-         $name=$_POST['name'];
-         $email=$_POST['email'];
-         //echo $filename;
-         addProduct($pname,$category,$price,$quantity,$name,$email,$_SESSION['image']);
-      }
-  }
-}
-?>
-<?php
-
-if(!isset($_SESSION['filename']))
-$_SESSION['filename']='';
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $filename = $_FILES['f-upload']['name'];
-  $_SESSION['image']=$filename;
-  if (isset($_SESSION['pics'])) {
-      array_push($_SESSION['pics'], $filename);
-  } else {
-      $_SESSION['pics'] = array($filename);
-  }
-  $file = 'uploads/' . $_FILES['f-upload']['name'];
-  
-  if (isset($_POST['submit'])) {
-     
-      move_uploaded_file($_FILES['f-upload']['tmp_name'], $file);
-      echo "uploaded Successfully!!!";
-  }
-}
-
-
-// if (isset($_SESSION['pics'])) {
-//   foreach ($_SESSION['pics'] as $p) {
-//       //echo "<img src='uploads/$p'>";
-//       //print_r($file);
-//   }
-// }
-
-?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -113,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <div class="position-sticky pt-3">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="dashboard.php">
+            <a class="nav-link active" aria-current="page" href="dashboard.html">
               <span data-feather="home"></span>
               Dashboard
             </a>
@@ -125,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="products.php">
+            <a class="nav-link" href="#">
               <span data-feather="shopping-cart"></span>
               Products
             </a>
@@ -136,25 +80,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               Customers
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="bar-chart-2"></span>
-              Reports
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="layers"></span>
-              Integrations
-            </a>
-          </li>
         </ul>
       </div>
     </nav>
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Add Product</h1>
+        <h1 class="h2">Dashboard</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
           <div class="btn-group me-2">
             <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
@@ -167,42 +99,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
       </div>
 
-      <form class="row g-3" action="" method='post' enctype="multipart/form-data">
-      <div>
-        <h2>Product Image</h2>
-       
-            <input type="file" name="f-upload">
-            <input type="submit" value="upload" name="submit" style="color:white; background-color:rgb(22,76,122); width:80px; height:40px;"><br><br>
-    
-    </div>
-        <div class="col-md-6">
-          <label for="inputEmail4" class="form-label">Email</label>
-          <input type="email" class="form-control" id="inputEmail4" name="email">
-        </div>
-        <div class="col-md-6">
-          <label for="inputPassword4" class="form-label">Name</label>
-          <input type="text" class="form-control" id="inputPassword4" name="name">
-        </div>
-        <div class="col-12">
-          <label for="inputAddress" class="form-label">Product Name</label>
-          <input type="text" class="form-control" id="inputAddress" name="pname" placeholder="Product name">
-        </div>
-        <div class="col-12">
-          <label for="inputAddress2" class="form-label">Product Category</label>
-          <input type="text" class="form-control" id="inputAddress2" name="category" placeholder="category">
-        </div>
-        <div class="col-md-6">
-          <label for="inputCity" class="form-label">Price</label>
-          <input type="integer" class="form-control" id="inputCity" name="price">
-        </div>
-        <div class="col-md-6">
-          <label for="inputCity" class="form-label">Qauntity</label>
-          <input type="number" class="form-control" id="inputCity" name="quantity">
-        </div>
-        <div class="col-12">
-          <button type="submit" class="btn btn-primary" name='action' value='addProduct'>Add Product</button>
-        </div>
-      </form>      
+      <h2>Section title</h2>
+      <div class="table-responsive">
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Header</th>
+              <th scope="col">Header</th>
+              <th scope="col">Header</th>
+              <th scope="col">Header</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1,001</td>
+              <td>random</td>
+              <td>data</td>
+              <td>placeholder</td>
+              <td>text</td>
+            </tr>
+            <tr>
+              <td>1,002</td>
+              <td>placeholder</td>
+              <td>irrelevant</td>
+              <td>visual</td>
+              <td>layout</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </main>
   </div>
 </div>

@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include("../classes/helper.php");
 require_once("../classes/config.php");
 if(isset($_POST['upass'])){
@@ -10,7 +10,7 @@ if(isset($_POST['upass'])){
  //echo $email;
 
  if(UserLogin($email,$upass,$role) && $_SESSION['login']=="yes"){
-   echo "yes";
+   //echo "yes";
 // if($check=="matched"){
    header("location:../dashboard.php");
   //  echo "matched";

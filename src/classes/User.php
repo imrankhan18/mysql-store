@@ -20,7 +20,7 @@ class User extends DB
         $this->cpassword = $cpassword;
         $this->role = $role;
     }
-   public $status='pending';
+    public $status='pending';
     public function addUser($user)
     {
         DB::getInstance()->exec(
@@ -42,7 +42,8 @@ class User extends DB
         return $stmt->fetchAll();
     }
 
-    public function showDetails(){
+    public function showDetails()
+    {
    
         $stmt = DB::getInstance()->prepare("SELECT * FROM users");
         $stmt->execute();
@@ -50,6 +51,14 @@ class User extends DB
 
         return $stmt->fetchAll();
     }
+    public function updateDetail($id, $name, $username, $email, $password, $role, $status)
+    {
+            DB::getInstance()->exec("UPDATE users SET name='$name',username='$username',email='$email',password='$password',role='$role',status='$status' WHERE user_id=$id");
+
+        }
+
+        
+    
 }
 
 
