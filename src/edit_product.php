@@ -1,34 +1,38 @@
 <?php
 session_start();
 include("./classes/productopr.php");
-if (isset($_POST)) {
-  $id = $_SESSION['id'];
-  $detail = getProductDetail($id);
-  $detail = $detail[0];
+$pid=$_SESSION['cartdetails'][0]['product_id'];
+echo $pid;
+if (isset($_GET)) {
+    $id = $_GET['id'];
+    $detail = getProductDetail($id);
+    $detail = $detail[0];
+    $action = $_POST['action'];
   //print_r($detail);
-
-  $action = $_POST['action'];
-
-  switch ($action) {
-    case 'updateProduct': 
-      {
-        $name = $_POST['name'];
-        $pname = $_POST['pname'];
-        $category = $_POST['category'];
-        $price = $_POST['price'];
-        $quantity = $_POST['quantity'];
-        $email = $_POST['email'];
-        updateProduct($id, $name, $pname, $category, $price, $quantity, $email);
-        header("Location:products.php");
-        break;
-      }
-  }
+    switch ($action) {
+        case 'updateProduct':
+            
+            $name = $_POST['name'];
+            $pname = $_POST['pname'];
+            $category = $_POST['category'];
+            $price = $_POST['price'];
+            $quantity = $_POST['quantity'];
+            $email = $_POST['email'];
+            updateProduct(
+                $id,
+                $name,
+                $pname,
+                $category,
+                $price,
+                $quantity,
+                $email
+            );
+            header("Location:products.php");
+            break;
+        
+    }
 }
 ?>
-
-
-
-
 
 <!doctype html>
 <html lang="en">

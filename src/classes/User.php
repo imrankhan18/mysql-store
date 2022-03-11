@@ -1,20 +1,22 @@
 <?php
+use App\DB;
+
 include('DB.php');
 
 class User extends DB
 {
-    public int $user_id;
-    public string $username;
+    public int $checkout_id;
+    public string $checkoutname;
     public string $email;
     public string $password;
     public string $cpassword;
     public string $role;
 
-    public function userDetail($fullname, $username, $email, $password, $cpassword,$role)
+    public function userDetail($fullname, $checkoutname, $email, $password, $cpassword,$role)
     {
-        //$this->user_id =$user_id;
+        //$this->user_id =$checkout_id;
         $this->fullname = $fullname;
-        $this->username = $username;
+        $this->username = $checkoutname;
         $this->email = $email;
         $this->password = $password;
         $this->cpassword = $cpassword;
@@ -28,6 +30,7 @@ class User extends DB
             VALUES('$user->fullname','$user->username','$user->email','$user->password','$user->cpassword','$user->role','$user->status');"
         );
     }
+
 
     public function signInUser()
     {
@@ -51,9 +54,9 @@ class User extends DB
 
         return $stmt->fetchAll();
     }
-    public function updateDetail($id, $name, $username, $email, $password, $role, $status)
+    public function updateDetail($id, $name, $checkoutname, $email, $password, $role, $status)
     {
-            DB::getInstance()->exec("UPDATE users SET name='$name',username='$username',email='$email',password='$password',role='$role',status='$status' WHERE user_id=$id");
+            DB::getInstance()->exec("UPDATE users SET name='$name',username='$checkoutname',email='$email',password='$password',role='$role',status='$status' WHERE user_id=$id");
 
         }
 

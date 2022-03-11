@@ -1,12 +1,7 @@
 <?php
-// require_once("../../classes/DB.php");
-include("helperproduct.php");
+use App\DB;
 
-
-// if(isset($_GET)){
-//     echo $_GET['pid'];
-// }
-
+include_once("helperproduct.php");
 if (isset($_POST)) {
     if (!isset($quantity)) {
         $quantity = 1;
@@ -14,16 +9,12 @@ if (isset($_POST)) {
         $quantity++;
     }
 
-    if (isset($_POST['cart'])) {
+    if (isset($_POST['cart'])){
         $productid = $_POST['cart'];
         echo $productid;
         $userid = $_SESSION['user_id'];
         
         $price=getPrice($productid);
-        print_r( $price);
-        // $price = $details['price'];
-        // print_r("<h1>qwertttttttttttttttttttttt" . $price . "</h1>");
-
         insertIntoCart($quantity, $userid, $productid, $price);
     }
 }
@@ -103,7 +94,7 @@ function getPrice($productid)
     foreach ($details as $k => $val1){
         if($val1['product_id']==$productid)
         {
-            return $val1['product_price'];
+            return $val1['product_price']; 
         }
     }
 }

@@ -1,17 +1,16 @@
 <?php
-session_start();
 include("productfetch.php");
-function addProduct($pname,$category,$price,$quantity,$name,$email,$image){
-    $product =new Product();
-    $product->createProduct($pname,$category,$price,$quantity,$name,$email,$image);
-    $product->addProduct($product);
+function addProduct($pname, $category, $price, $quantity, $name, $email, $image)
+{
+    $product=new Product();
+    $product->createProduct($pname, $category, $price, $quantity, $name, $email, $image);
+    $product->addProduct($product) ;
 }
 function displayProduct()
 {
-    
-  $p_list=new Product();
-    $list=$p_list->getProductList();
-    $_SESSION['p_disp']="<div class='table-responsive'>
+    $_SESSION['p_disp']='';
+    $_SESSION['productdetails']=productListPagenation2();
+    $_SESSION['p_disp'] = "<div class='table-responsive'>
     <table class='table table-striped table-sm'>
       <thead>
         <tr>
@@ -27,9 +26,8 @@ function displayProduct()
       </thead>
       <tbody>";
 
-        foreach($list as $key=>$p)
-        {
-            $_SESSION['p_disp'].="<tr><form action='' method='post'>
+    foreach (productListPagenation2() as $key => $p) {
+            $_SESSION [ 'p_disp' ].= "<tr><form action='' method='post'>
                 <td>".$p['product_id']."</td>
                 <td>".$p['product_name']."</td>
                 <td>".$p['product_category']."</td>
@@ -38,9 +36,10 @@ function displayProduct()
                 <td>".$p['name']."</td>
                 <td>".$p['email']."</td>
                 <td>".$p['product_image']."</td>
-                <td><input style='display:none' name='id' value='".$p['product_id']."'><button name='action' value='edit'>EDIT</button><button name='action' value='delete'>DELETE&nbsp;</button></td></form>
+                <td><a href='../edit_product.php?id=".$p['product_id']."'>EDIT</a>
+                <button name='' value='".$p['product_id']."''>DELETE&nbsp;</button></td></form>
           </tr>";
-        }
+    }
 
         $_SESSION['p_disp'].="</tbody></table>";
 
@@ -64,12 +63,10 @@ function getProductDetail($id)
     return $product->getProductDetail($id);
 
 }
-function updateProduct($id,$pname,$category,$price,$quantity,$name,$email)
+function updateProduct($id, $pname, $category, $price, $quantity, $name, $email)
 {
     $product=new Product();
-    if($pname!="" && $price!="" && $quantity!="" && $category!="" && $name!="" && $email!="")
-    $product->updateProduct($id,$name,$category,$price,$quantity,$name,$email);
-    
-    
+    if ($pname!="" && $price!="" && $quantity!="" && $category!="" && $name!="" && $email!=" ") {
+        $product -> updateProduct($id, $name, $category, $price, $quantity, $name, $email);
+    }
 }
-?>

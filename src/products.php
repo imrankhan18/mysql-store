@@ -1,34 +1,53 @@
 <?php
+use App\DB;
 
+// include_once("./classes/DB.php");
 include("./classes/productopr.php");
-if (isset($_POST['logout'])) {
-  if ($_POST['logout'] == "yes") {
+$perPage = 5;
+$stmt = DB::getInstance()->query('SELECT count(*) FROM products');
+$total_results = $stmt->fetchColumn();
+$total_pages = ceil($total_results / $perPage);
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+$starting_limit = ($page - 1) * $perPage;
+$query = "SELECT * FROM products ORDER BY product_id DESC LIMIT $starting_limit,$perPage";
+$products = DB::getInstance()->query($query)->fetchAll();
+function productListPagenation2()
+{
+     global $starting_limit, $perPage;
+     $stmt = DB::getInstance()->prepare("SELECT * FROM products ORDER BY product_id LIMIT $starting_limit, $perPage");
+    
+     $stmt->execute();
+
+     $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+     return $stmt->fetchAll();
+}
+
+if (isset ($_POST['logout'])) {
+    if ($_POST['logout'] == "yes") {
     // echo "yes";
-    $_SESSION['login'] = 'no';
-    $_SESSION['show'] = 'none';
-    header("location:../admin/signin.php");
-  }
+        $_SESSION ['login'] = 'no';
+        $_SESSION ['show'] = 'none';
+        header("location:../admin/signin.php");
+    }
 }
 if (isset($_POST)) {
-  displayProduct();
-  if (isset($_POST['action'])) {
-    $action = $_POST['action'];
-    //echo $action;
-    switch ($action) {
-      case 'edit': {
-          $_SESSION[' id '] = $_POST['id'];
-          header("Location:edit_product.php");
-          displayProduct();
-          break;
-        }
-      case 'delete': {
-          $id = $_POST['id'];
-          deleteProduct($id);
+    displayProduct();
+    if (isset($_POST['action'])) {
+        $action = $_POST['action'];
+        switch ($action) {
+            case 'edit':
+                $_SESSION[' id '] = $_POST['id'];
+                header("Location:edit_product.php");
+                displayProduct();
+                break;
+            case 'delete':
+                $id = $_POST['id'];
+                deleteProduct($id);
+
         }
     }
-  }
 }
-updateProduct($id, $pname, $category, $price, $quantity, $name, $email);
+//updateProduct($id, $pname, $category, $price, $quantity, $name, $email);
 ?>
 
 
@@ -206,16 +225,31 @@ updateProduct($id, $pname, $category, $price, $quantity, $name, $email);
           </div>
         </form>
         <?php echo $_SESSION['p_disp']; ?>
-        <?php   ?>
+        
 
         <nav aria-label="Page navigation example">
-          <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-          </ul>
+        <?php
+            echo '<ul class=" pagination admin-pagination ">';
+        if ($page > 1) {
+              echo '<li ><a href="products.php?page='.($page-1).'" class="btn btn-primary" >Prev&nbsp</a></li>';
+        }
+            
+        for ($i =1; $i <= $total_pages ; $i++)
+        { 
+              
+              if($i==$page) {
+                    $active="active";
+              } else {
+                    $active="";
+  
+              }
+            echo '<li class='.$active.'><a href="./products.php?page='.$i.'" class="btn btn-primary">'.$i.'&nbsp&nbsp&nbsp;</a></li>'; 
+          }
+        if ($total_pages> $page) {
+          echo '<li><a href="./products.php?page='.($page+1).'" class="btn btn-primary" >Next</a></li>';
+          }
+          echo '</ul>';
+          ?>
         </nav>
     </div>
     </main>

@@ -1,4 +1,8 @@
 <?php
+namespace App;
+
+use PDO;
+
 require_once("config.php");
 class DB
 {

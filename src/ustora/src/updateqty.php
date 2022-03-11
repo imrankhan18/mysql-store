@@ -1,4 +1,5 @@
 <?php
+use App\DB;
 include_once("../../classes/DB.php");
 if (isset($_POST)) {
     $cart_id = $_POST['cartid'];

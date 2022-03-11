@@ -51,8 +51,8 @@ header("loaction:index.php");
         <h2>Gallery</h2>
         <p>This page displayed the list of uploaded images. </p>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" enctype="multipart/form-data">
-            <input type="file" name="f-upload">
-            <input type="submit" value="upload" name="submit" style="color:white; background-color:rgb(22,76,122); width:80px; height:40px;"><br><br>
+            <input type="file" name="f-upload"><input type="submit" value="upload" name="submit" style="color:white; 
+            background-color:rgb(22,76,122); width:80px; height:40px;"><br><br>
         </form>
     </div>
 

@@ -1,16 +1,6 @@
 <?php
 // require_once("./helperproduct.php");
-
 include("./addtocart.php");
-// if(isset($_GET))
-// {
-//    $productid = $_GET['pid'];
-//     //echo $productid;
-//     $userid = $_SESSION['user_id'];
-//     $quantity=1;
-//     insertIntoCart($quantity, $userid, $productid);
-// }
-
 ?>
 <!doctype html>
 <html lang="en">
@@ -53,66 +43,12 @@ include("./addtocart.php");
         <h2><a href="./cart.php">Cart</a></h2>
         <h2><a href="./home.php">Shop</a></h2>
       </div>
-     
-      <?php
-      cartDisplay();
-      echo $_SESSION['displaycart'];
-      ?>
-
-      
-
-      <!-- <div class="row g-5">
-      <div class="col order-md-last">
-        <h4 class="d-flex justify-content-between align-items-center mb-3">
-          <span class="text-primary">Your cart</span>
-          <span class="badge bg-primary rounded-pill">3</span>
-        </h4>
-        <table class="table">
-            <tr>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Qty</th>
-                <th>Total</th>
-            </tr>
-            <tr>
-                <td>Soccer</td>
-                <td>$100</td>
-                <td>
-                    <input type="text" class="w-20">
-                    <input type="button" class="btn btn-secondary ms-1 w-20" value="update">
-                    <a href="#" class="link-danger">Remove</a>
-                </td>
-                <td>$120</td>
-            </tr>
-            <tr>
-                <td>Soccer</td>
-                <td>$100</td>
-                <td><input type="text" class="w-20">
-                    <input type="button" class="btn btn-secondary ms-1 w-20" value="update">
-                    <a href="#" class="link-danger">Remove</a></td>
-                <td>$120</td>
-            </tr>
-            <tr>
-                <td>Soccer</td>
-                <td>$100</td>
-                <td><input type="text" class="w-20">
-                    <input type="button" class="btn btn-secondary ms-1 w-20" value="update">
-                    <a href="#" class="link-danger">Remove</a>
-                </td>
-                <td>$120</td>
-            </tr>
-            <tfoot>
-                <tr>
-                    <td colspan="4" class="text-end">$1000</td>
-                </tr>
-            </tfoot>
-        </table>
-      </div>
-    </div> -->
+        <?php cartDisplay(); ?>
+        <?php  echo $_SESSION['displaycart']; ?>
       <div class="row g-5 align-items-right">
         <div class="col-3">
           <form>
-            <button type="submit" class="btn btn-primary"><a href="./checkout.php " class="text text-white">Checkout</a></button>
+            <button type="submit" class="btn btn-primary"><a href="./checkout/checkout.php " class="text text-white">Checkout</a></button>
           </form>
         </div>
       </div>
@@ -132,5 +68,4 @@ include("./addtocart.php");
   <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   <script src="./assets/js/form-validation.js"></script>
 </body>
-
 </html>

@@ -1,4 +1,5 @@
 <?php
+use App\DB;
 // include("./addtocart.php");
 include_once("../../classes/DB.php");
 if (isset($_GET['pid'])) {

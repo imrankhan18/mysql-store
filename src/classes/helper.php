@@ -1,6 +1,8 @@
 <?php
-//session_start();
+use App\DB;
+
 include('User.php');
+
 
 function addNewUser($fullname, $username, $email, $password, $cpassword, $role, $status = "pending")
 {
@@ -112,75 +114,3 @@ function editDetails()
     </tbody>
   </table>";
 }
-
-
-//  function myDetails()
-// {
-//     $user=new User();
-   
-//     $_SESSION['abc']=$user->showDetails();
-    
-    
-
-//     // foreach($user->showDetails() as $key=>$val)
-//     // {
-//     //     if($val['user_id']==$id)
-//     //     {
-            
-//     //         $_SESSION['details']=$val;
-
-            
-//     //     }
-            
-//     //     }
-//     // }
-
-//     }
-
-// function Details()
-// {   
-//     myDetails();
-//     $a="";
-//     foreach($_SESSION['abc'] as $key=>$value)
-//     {
-//         $a="<table class='table table-striped table-sm'>
-//     <thead>
-//               <tr>
-//                 <th>User Name</th>
-//                 <th>Full Name</th>
-//                 <th>Email </th>
-//                 <th>Password</th>
-//                 <th>Role</th>
-//               </tr></thead><tbody>
-//               <tr>
-//                 <td>" . $value['user_name'] . "</td>
-//                 <td>" . $value['full_name'] . "</td>
-//                 <td>" . $value['email'] . "</td>
-//                 <td>" . $value['password'] . "</td>
-//                 <td>" . $value['role'] . "</td>
-//                 <td><form action=''method='post'><button name='action' value='edit'>Edit</button></td>
-                
-//               </tr></tbody></table>";
-//     }
-//     return $a;
-  
-    // $_SESSION['displayDetails']="";
-    // $_SESSION['displayDetails'] .= "<table class='table table-striped table-sm'>
-    // <thead>
-    //           <tr>
-    //             <th>User Name</th>
-    //             <th>Full Name</th>
-    //             <th>Email </th>
-    //             <th>Password</th>
-    //             <th>Role</th>
-    //           </tr></thead><tbody>
-    //           <tr>
-    //             <td>" . $details['user_name'] . "</td>
-    //             <td>" . $details['full_name'] . "</td>
-    //             <td>" . $details['email'] . "</td>
-    //             <td>" . $details['password'] . "</td>
-    //             <td>" . $details['role'] . "</td>
-    //             <td><form action=''method='post'><button name='action' value='edit'>Edit</button></td>
-                
-    //           </tr></tbody></table>";
-    //     }

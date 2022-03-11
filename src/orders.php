@@ -1,26 +1,5 @@
 <?php
-session_start();
-include_once("./classes/config.php");
-include_once("./classes/helper.php");
-$id = $_SESSION['user_id'];
-if (isset($_POST['logout'])) {
-    if ($_POST['logout'] == "yes") {
-        $_SESSION['login'] = ' no ';
-         $_SESSION['show'] = 'none';
-        header("location:../admin/signin.php");
-    }
-}
 
-$details = $_SESSION['details'];
-if (isset($_POST['action'])) {
-    $action=$_POST['action'];
-    switch ($action)
-    {
-        case 'edit':
-            editDetails($details);
-            break;
-    }
-}
 
 ?>
 <!doctype html>
@@ -94,7 +73,7 @@ if (isset($_POST['action'])) {
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./orders.php">
+              <a class="nav-link" href="#">
                 <span data-feather="file"></span>
                 Orders
               </a>
@@ -148,14 +127,69 @@ if (isset($_POST['action'])) {
           </div>
         </div>
 
-        <h2>My Profile</h2>
 
         <div style="display:<?php echo $_SESSION['display'] ?>" class="table-responsive">
-            <?php myDetails($id); ?>
-            <?php echo $_SESSION['displayDetailsUser']; ?>
-            <?php editDetails($details); ?>
+          <!-- <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Header</th>
+              <th scope="col">Header</th>
+              <th scope="col">Header</th>
+              <th scope="col">Header</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1,001</td>
+              <td>random</td>
+              <td>data</td>
+              <td>placeholder</td>
+              <td>text</td>
+              
+            
+            </tr>
+            <tr>
+              <td>1,002</td>
+              <td>placeholder</td>
+              <td>irrelevant</td>
+              <td>visual</td>
+              <td>layout</td>
+            
+            </tr>
+          </tbody>
+        </table> -->
         </div>
         <div class="table-responsive">
+          <!-- <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th scope="col">User name</th>
+              <th scope="col">Full Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Password</th>
+              <th scope="col">Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1,001</td>
+              <td>random</td>
+              <td>data</td>
+              <td>placeholder</td>
+              <td>text</td>
+              <td><button type="button" class="btn btn-sm btn-outline-secondary">Edit</button></td>
+            </tr>
+            <tr>
+              <td>1,002</td>
+              <td>placeholder</td>
+              <td>irrelevant</td>
+              <td>visual</td>
+              <td>layout</td>
+              <td><button type="button" class="btn btn-sm btn-outline-secondary">Edit</button></td>
+            </tr>
+          </tbody>
+        </table> -->
         </div>
       </main>
     </div>
@@ -166,3 +200,4 @@ if (isset($_POST['action'])) {
 </body>
 
 </html>
+?>

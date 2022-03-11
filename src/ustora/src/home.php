@@ -1,5 +1,34 @@
 <?php
+use App\DB;
+
 include("./helperproduct.php");
+include_once("../../classes/DB.php");
+    $perPage = 3;
+    // Calculate Total pages
+    $stmt = DB::getInstance()->query('SELECT count(*) FROM products');
+    $total_results = $stmt->fetchColumn();
+    $total_pages = ceil($total_results / $perPage);
+
+    // Current page
+    $page = isset($_GET['page']) ? $_GET['page'] : 1;
+    $starting_limit = ($page - 1) * $perPage;
+
+    // Query to fetch products
+    $query = "SELECT * FROM products ORDER BY product_id LIMIT $starting_limit,$perPage";
+
+
+    $products = DB::getInstance()->query($query)->fetchAll();
+
+function productListPagenation()
+{
+     global $starting_limit, $perPage;
+     $stmt = DB::getInstance()->prepare("SELECT * FROM products ORDER BY product_id LIMIT $starting_limit, $perPage");
+    
+     $stmt->execute();
+
+     $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+     return $stmt->fetchAll();
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -8,7 +37,22 @@ include("./helperproduct.php");
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <title>Home · Bootstrap v5.1</title>
-    
+    <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+
+  <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/cesiumjs/1.78/Build/Cesium/Cesium.js"></script>
+
+
+
+
+
+  <!-- Bootstrap core CSS -->
+  <link href="./Signin Template · Bootstrap v5.1_files/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <!-- Bootstrap core CSS -->
     <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -113,7 +157,8 @@ include("./helperproduct.php");
       </div>
     <div class="container">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        <?php displayProduct(); echo $_SESSION['display']; ?>
+        <?php displayProduct();  ?>
+        <?php echo $_SESSION['display']; ?>
         
         <!-- <div class="col">
           <div class="card shadow-sm">
@@ -243,15 +288,29 @@ include("./helperproduct.php");
           </div> -->
 
           <div class="col">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                </ul>
-              </nav>
+          <nav aria-label="Page navigation example">
+            <?php
+            echo '<ul class=" pagination admin-pagination ">';
+            if($page>1){
+              echo '<li ><a href="home.php?page='.($page-1).'" class="btn btn-primary" >Prev&nbsp</a></li>';
+            }
+            
+            for ($i =1; $i <= $total_pages ; $i++ ){ 
+              
+              if($i==$page) {
+                    $active="active";
+              } else {
+                    $active="";
+  
+              }
+            echo '<li class='.$active.'><a href="./home.php?page='.$i.'" class="btn btn-primary">'.$i.'&nbsp&nbsp&nbsp;</a></li>'; 
+          }
+          if($total_pages>$page){
+          echo '<li><a href="home.php?page='.($page+1).'" class="btn btn-primary" >Next</a></li>';
+          }
+          echo '</ul>';
+          ?>
+        </nav>
           </div>
         
       </div>

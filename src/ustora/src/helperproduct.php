@@ -1,7 +1,7 @@
 <?php
 session_start();
 include("../../classes/productfetch.php");
-// include_once("addtocart.php");
+// include_once("./addtocart.php");
 function getProductList()
 {
     $product = new Product();
@@ -13,9 +13,12 @@ function getProductList()
 //     return $product->getProductDetail($id);
 
 // }
+
+
+
 function displayProduct()
 {
-    $details = getProductList();
+    $details = productListPagenation();
     $_SESSION['display'] = "";
     foreach ($details as $key => $value) {
         $_SESSION['display'] .= "<form action='cart.php' method='post'><div class='col'>
@@ -76,46 +79,4 @@ function singleProductDisplay($id)
         </div>
     </div>
 </section>";
-
-    //echo $_SESSION['display'];
 }
-
-// function addToCart()
-// {
-//     $details = getProductList();
-//     $_SESSION['cart'] = "";
-//     // foreach($details as $key=>$value){
-//     $_SESSION['cart'] .= "<form action='' method='post'><div class='row g-5'>
-//         <div class='col order-md-last'>
-//           <h4 class='d-flex justify-content-between align-items-center mb-3'>
-//             <span class='text-primary'>Your cart</span>
-//             <span class='badge bg-primary rounded-pill'>3</span>
-//           </h4>
-//           <table class='table'>
-//               <tr>
-//                   <th>Product</th>
-//                   <th>Price</th>
-//                   <th>Qty</th>
-//                   <th>Total</th>
-//               </tr>
-//               <tr>
-//                   <td>Soccer</td>
-//                   <td>$100</td>
-//                   <td>
-//                       <input type='text' class='w-20'>
-//                       <input type='button' class='btn btn-secondary ms-1 w-20' value='update'>
-//                       <a href='#' class='link-danger'>Remove</a>
-//                   </td>
-//                   <td>$120</td>
-//               </tr>
-//               <tfoot>
-//               <tr>
-//                   <td colspan='4' class='text-end'>$1000</td>
-//               </tr>
-//           </tfoot>
-//       </table>
-//     </div>
-//   </div></form>";
-// }
-
-// }
