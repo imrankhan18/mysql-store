@@ -1,53 +1,24 @@
 <?php
 session_start();
-include_once("./classes/config.php");
-include_once("./classes/helper.php");
-$id = $_SESSION['user_id'];
-if (isset($_POST['logout'])) {
-    if ($_POST['logout'] == "yes") {
-        $_SESSION['login'] = ' no ';
-         $_SESSION['show'] = 'none';
-        header("location:../admin/signin.php");
-    }
+include_once("../classes/User.php");
+//include_once('./helper.php');
+// print_r($_SESSION['details']);
+if(isset($_POST['username'])){
+    $user_id=$_SESSION['details']['user_id'];
+    $username=$_POST['username'];
+    $fullname=$_POST['fullname'];
+    $email=$_POST['email'];
+    $password=$_POST['password'];
+    $role=$_POST['role'];
+    echo $role;
+    $edit = new User();
+    $edit->editDet($user_id,$username,$fullname, $email,$password,$role);
+    header("location:../dashboard.php");
+
+   
 }
-
-$details = $_SESSION['details'];
-// echo $_SESSION['details'];
-if (isset($_POST['action'])) {
-    $action=$_POST['action'];
-    echo $_POST['action'];
-    switch ($action)
-    {
-        case 'edit':
-            editDetails($details);
-            break;
-    }
-}
-
-if(isset($_POST['authenticate']))
-{
-  $action=$_POST['authenticate'];
-  // echo "<h1>jdfjuajwnfjasnf".$_POST['authenticate']."</h1>";
-  $userId=substr($action, 4);
-  $action=substr($action, 0, 3);
-
-  switch($action)
-  {
-    case 'app':
-      {
-        changeStatus($userId,'approve');
-        break;
-      }
-    case 'dis':
-      {
-        changeStatus($userId,'dissapprove'); 
-        break;
-      }
-  }
-
-}
-
 ?>
+
 <!doctype html>
 <html lang="en">
 
@@ -173,20 +144,36 @@ if(isset($_POST['authenticate']))
           </div>
         </div>
 
-        <h2>Admin Profile</h2>
+        <h2>My Profile</h2>
 
-        <div style="display:<?php echo $_SESSION['display'] ?>" class="table-responsive">
-            <?php myDetails($id); ?>
-            <?php echo $_SESSION['displayDetailsUser']; ?>
-            <?php editDetails($details); ?>
+        <div style="display:block" class="table-responsive">
+        
+        <table class='table table-striped table-sm'>
+    <thead>
+              <tr>
+                <th>User Name</th>
+                <th>Full Name</th>
+                <th>Email </th>
+                <th>Password</th>
+                <th>Role</th>
+              </tr></thead>
+              <tbody>
+              <tr>
+                <form action='' method='post'>
+                <td><input name='username' placeholder="<?php echo $_SESSION['details']['user_name'] ?>"></td>
+                <td><input name='fullname' placeholder="<?php echo $_SESSION['details']['full_name'] ?>"></td>
+                <td><input name='email' placeholder="<?php echo $_SESSION['details']['email'] ?>"></td>
+                <td><input name='password' placeholder="<?php echo $_SESSION['details']['password'] ?>"></td>
+                <td><input name='role' placeholder="<?php echo $_SESSION['details']['role'] ?>"></td>
+                <td>  <button name='action' value='submit' >Update</button></td>
+                </form>  
+              </tr></tbody></table>
         </div>
-        <h2>User's Profile</h2>
 
-        <div style="display:<?php echo $_SESSION['display'] ?>" class="table-responsive">
+        
             
-            <?php
-            if($_SESSION['details']['role']=='admin') 
-            echo $_SESSION['completeDetail']; ?>
+           
+             
             
         </div>
         <div class="table-responsive">
@@ -208,5 +195,4 @@ if(isset($_POST['authenticate']))
 
   <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
-
 </html>

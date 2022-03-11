@@ -78,7 +78,7 @@ function Details()
                 <td>" . $value['email'] . "</td>
                 <td>" . $value['password'] . "</td>
                 <td>" . $value['role'] . "</td>
-                <td><form action=''method='post'><button name='action' value='edit'>Edit</button></td>
+                <td>  <form action='../classes/editdetails.php' method='post'><button name='action' value='".$value['user_id']."'>Edit</button></form></td>
                 
               </tr></tbody></table>";
 }
@@ -99,8 +99,8 @@ function editDetails()
         
     </thead>
     <tbody>
-      <tr><form action='' method='post'>
-       
+    <tr>
+       <form action='' method='post'>
         
         <td><input name='username' placeholder=" . $details['user_name'] . "></td>
         <td><input name='fullname' placeholder=" . $details['full_name'] . "></td>
@@ -108,9 +108,63 @@ function editDetails()
         <td><input name='password' placeholder=" . $details['password'] . "></td>
         <td><input name='role' placeholder=" . $details['role'] . "></td>
         
-        <td><button name='action' value='update'>update</button></td></form>
+        <td><button name='action' value='".$details['user_id']."'>update</button></td></form>
       </tr>
       
     </tbody>
   </table>";
+}
+
+
+
+function DisplayUserDetails()
+{
+    $user=new User();
+    $completeDetails=$user->showDetails();
+    $_SESSION['completeDetail']="";
+    $_SESSION['completeDetail'].= "<div class='table-responsive'>
+    <table class='table table-striped table-sm'>
+    <thead>
+      <tr>
+        
+        <th scope='col'>User Name</th>
+        <th scope='col'>Full Name</th>
+        <th scope='col'>Email</th>
+        <th scope='col'>Password</th>
+        <th scope='col'>Role</th>
+        <th scope='col'>status</th>
+        
+    </thead>
+    <tbody>";
+
+    foreach($completeDetails as $key=>$val)
+    {
+        $act="approve";
+        $act1='app';
+        if($val['status']=='approve')
+         {
+             $act1='dis';
+             $act='dissapprove';
+         }
+       if($val['role']!='admin')
+        {
+                    $_SESSION['completeDetail'].=" <tr> <td>" . $val['user_name'] . "</td>
+                <td>" . $val['full_name'] . "</td>
+                <td>" . $val['email'] . "</td>
+                <td>" . $val['password'] . "</td>
+                <td>" . $val['role'] . "</td>
+
+                <td>" . $val['status'] . "</td>
+                <td><form action=''method='post'><button name='authenticate' value='".$act1."-".$val['user_id']."'>".$act."</button></form></td></tr>";}
+
+    }
+    $_SESSION['completeDetai'].="</tbody></table>";
+}
+
+
+function changeStatus($id,$status)
+{
+    $user=new User();
+    $user->change($id, $status);
+    DisplayUserDetails();
 }

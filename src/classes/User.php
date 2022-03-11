@@ -1,6 +1,5 @@
 <?php
 use App\DB;
-
 include('DB.php');
 
 class User extends DB
@@ -59,9 +58,15 @@ class User extends DB
             DB::getInstance()->exec("UPDATE users SET name='$name',username='$checkoutname',email='$email',password='$password',role='$role',status='$status' WHERE user_id=$id");
 
         }
-
+    public function change($id, $status)
+    {
+        DB::getInstance()->exec("UPDATE users SET status='$status' where user_id=$id");
+    }
         
-    
+    public function editDet($user_id,$username,$fullname,$email,$password,$role)
+    {
+        DB::getInstance()->exec("UPDATE users SET user_name='$username',full_name='$fullname',email='$email',password='$password',role='$role' where user_id=$user_id");
+    }
 }
 
 

@@ -3,7 +3,7 @@
 use App\DB;
 
 
-include_once("../../../classes/DB.php");
+require_once("../../../classes/DB.php");
 include_once('./checkout.php');
 include_once("./display2.php");
 if (!isset($_SESSION['cartdetails'])) {
@@ -32,13 +32,14 @@ if (!isset($_SESSION['cartdetails'])) {
     );
     deleteCart();
     htmlCartEmpty();
+    header("location:./checkout.php");
     }
 }
 
 
 function getcart2()
 {
-    $stmt = DB::getInstance()->prepare("SELECT * FROM products");
+    $stmt = DB::getInstance()->prepare("SELECT * FROM cart");
     $stmt->execute();
     $result=$stmt->setFetchMode(PDO::FETCH_ASSOC);
     return $stmt->fetchAll();

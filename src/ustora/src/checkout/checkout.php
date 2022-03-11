@@ -1,12 +1,12 @@
 <?php 
 session_start();
-require("../../../classes/config.php");
+require_once("../../../classes/config.php");
 include_once("./display2.php");
 include_once("./checkoutopr.php");
 // echo "<pre>";
 // print_r($_SESSION);
 // echo "</pre>";
-// echo $_SESSION['cartdetails'][0]['user_id'];
+
 if (isset($_POST['fname']) )
 {   
     $userid=$_SESSION['cartdetails'][0]['user_id'];
@@ -31,7 +31,7 @@ if (isset($_POST['fname']) )
 // {
 //     $productname =$_POST['pname'];
 // }
-function displayCheckoutd()
+function displayCheckout()
 {
     $_SESSION['checkout']="";
     $_SESSION['checkout'].= "<div>
@@ -242,7 +242,7 @@ function displayCheckoutd()
   </div>
     <?php displaysecondcart();  ?>
     <?php echo $_SESSION ['cart2'] ;?>
-    <?php displayCheckoutd(); ?>
+    <?php displayCheckout(); ?>
     <?php  echo $_SESSION ['checkout']; ?>
    
       
